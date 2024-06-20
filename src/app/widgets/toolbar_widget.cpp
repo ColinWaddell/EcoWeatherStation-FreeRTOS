@@ -121,40 +121,40 @@ void toolbar_draw_data_status(data_status status) {
     bool error = false;
     uint32_t color;
 
-    data_sprite.fillSprite(BGR(TFT_BACKGROUND));
+    data_sprite.fillSprite(FOUR_BIT_BLACK);
 
     switch (status) {
         case DATA_STATUS_EMPTY:
-            color = TFT_BACKGROUND;
+            color = FOUR_BIT_BLACK;
             break;
 
         case DATA_STATUS_SEARCHING:
-            color = TFT_BACKGROUND;
+            color = FOUR_BIT_BLACK;
             break;
 
         case DATA_STATUS_DOWNLOADED:
-            color = TFT_BACKGROUND;
+            color = FOUR_BIT_BLACK;
             break;
 
         case DATA_STATUS_DECODER_FAILURE:
-            color = TFT_ORANGE;
+            color = FOUR_BIT_VIOLET;
             error = true;
             break;
 
         case DATA_STATUS_DOWNLOAD_FAILURE:
         default:
-            color = TFT_RED;
+            color = FOUR_BIT_RED;
             error = true;
     }
 
     if (error) {
         /* Draw Cross */
-        data_sprite.drawLine(0, 0, 16, 16, BGR(color));
-        data_sprite.drawLine(0, 16, 16, 0, BGR(color));
+        data_sprite.drawLine(0, 0, 16, 16, color);
+        data_sprite.drawLine(0, 16, 16, 0, color);
     } else {
         /* Draw Down Arrow */
-        data_sprite.fillRect(6, 0, 3, 10, BGR(color));
-        data_sprite.fillTriangle(1, 9, 13, 9, 7, 15, BGR(color));
+        data_sprite.fillRect(6, 0, 3, 10, color);
+        data_sprite.fillTriangle(1, 9, 13, 9, 7, 15, color);
     }
 
     if (xSemaphoreTake(TFTLock, portMAX_DELAY) == pdTRUE) {
