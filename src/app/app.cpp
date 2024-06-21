@@ -15,6 +15,7 @@
 
 #include "app/managers/clock_manager.h"
 #include "app/managers/data_manager.h"
+#include "app/managers/screen_server.h"
 #include "app/managers/wifi_manager.h"
 
 #include "app.h"
@@ -37,4 +38,7 @@ void app_setup() {
     wifi_init();
     clock_init();
     data_init();
+
+    /* Optional */
+    screen_server_init();
 }
