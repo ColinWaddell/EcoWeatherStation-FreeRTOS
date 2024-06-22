@@ -34,11 +34,14 @@ extern SemaphoreHandle_t TFTLock;
 void draw_uv_level(int16_t level) {
     uint16_t colour;
 
+    uv_sprite.setTextDatum(MC_DATUM);
+
     switch (level) {
         case 0:
             colour = FOUR_BIT_DARK_GREY;
             break;
         case 1:
+            uv_sprite.setTextDatum(MR_DATUM);
         case 2:
             colour = FOUR_BIT_GREEN;
             break;
@@ -53,7 +56,6 @@ void draw_uv_level(int16_t level) {
 
     String uv_level_pretty = level < 10 ? (String)level : "X";
     uv_sprite.fillTriangle(UV_SPRITE_TRIANGLE_POINTS, colour);
-    uv_sprite.setTextDatum(MC_DATUM);
     uv_sprite.setTextColor(BGR(TFT_BACKGROUND));
     uv_sprite.drawString((String)uv_level_pretty, UV_SPRITE_TEXT_XY);
 
