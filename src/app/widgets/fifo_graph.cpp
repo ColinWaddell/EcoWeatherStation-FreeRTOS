@@ -3,7 +3,7 @@
 #include "app/tft.h"
 
 #define GRAPH_PIXEL_SPACING 3
-#define FIFO_INIT_VAL -999.0
+#define FIFO_INIT_VAL 0.0
 
 // Constructor with colors
 FIFOGraph::FIFOGraph(
@@ -124,10 +124,7 @@ void FIFOGraph::addDataPoint(float newPoint) {
     }
     data.push(newPoint);
 
-    if (newPoint < yMin || newPoint > yMax) {
-        adjustBounds();
-    }
-
+    adjustBounds();
     drawGraph();
 }
 
