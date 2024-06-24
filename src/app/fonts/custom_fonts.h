@@ -9,8 +9,8 @@
 #include "digital_7__mono_24pt7b.h"
 #define DIGITAL_FONT_MEDIUM &digital_7__mono_24pt7b
 
-#include "digital_7__mono_42pt7b.h"
-#define DIGITAL_FONT_LARGE &digital_7__mono_42pt7b
+#include "digital_7__mono_38pt7b.h"
+#define DIGITAL_FONT_LARGE &digital_7__mono_38pt7b
 
 #include "Nunito_Bold8pt7b.h"
 #define NORMAL_FONT_XSMALL &Nunito_Bold8pt7b

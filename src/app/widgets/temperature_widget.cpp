@@ -77,9 +77,13 @@ void temperature_update_sprite(temperature_packet packet) {
 
     if (temperature_val != _temperature_val) {
         /* Generate Message */
-        snprintf(buffer, sizeof(buffer), "%.1fC", _temperature_val);
+        snprintf(
+            buffer, sizeof(buffer), _temperature_val <= -10 ? "%.1f" : "%.1fC", _temperature_val
+        );
         temperature_prev = String(buffer);
-        snprintf(buffer, sizeof(buffer), "%.1fC", temperature_val);
+        snprintf(
+            buffer, sizeof(buffer), temperature_val <= -10 ? "%.1f" : "%.1fC", temperature_val
+        );
         temperature_now = String(buffer);
 
         /* Update Sprite */

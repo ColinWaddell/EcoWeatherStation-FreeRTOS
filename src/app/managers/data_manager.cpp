@@ -30,7 +30,7 @@ data_packet data_parse(JsonDocument doc) {
     /* Parse data */
     try {
         packet.temperature.currently
-            = 22.2;  //(float)std::stof((const char *)doc["common_list"][0]["val"]);
+            = -22.2;  //(float)std::stof((const char *)doc["common_list"][0]["val"]);
         packet.temperature.feelslike = (float)std::stof((const char *)doc["common_list"][2]["val"]);
         packet.sun.solar = (float)std::stof((const char *)doc["common_list"][7]["val"]);
         packet.sun.uv_level = (int16_t)std::stoi((const char *)doc["common_list"][8]["val"]);
