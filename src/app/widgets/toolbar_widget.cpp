@@ -13,6 +13,7 @@
 #include "app/layout.h"
 #include "app/tasks.h"
 #include "app/tft.h"
+#include "app/widgets/moon_phases.h"
 #include "app/widgets/toolbar_widget.h"
 #include "config.h"
 
@@ -44,61 +45,39 @@ QueueHandle_t msgQueue;
 QueueHandle_t dataQueue;
 
 void draw_moon_phase(TFT_eSprite *sprite, int phase) {
-    int centerX = sprite->width() / 2;
-    int centerY = sprite->height() / 2;
-    int diameter = min(sprite->width(), sprite->height()) - 1;
-    int radius = (diameter / 2) - 1;
-    int xr = abs(cos(((float)phase / 29.0f) * 2.0 * PI)) * radius;
-
-    sprite->fillSprite(COLOURS_MOON_BACKGROUND);
-    sprite->fillCircle(centerX, centerY, radius, COLOURS_MOON_FACE);
+#if 0
+    static int test = 0;
+    phase = test;
+    test++;
+    if (test > 29) {
+        test = 0;
+    }
+    log_d(">>>> PHASE: %d", phase);
+#endif
+    int x;
 
     if (phase == 0 || phase == 29) {
-        /* New Moon */
-        sprite->fillCircle(centerX, centerY, radius - 1, COLOURS_MOON_BACKGROUND);
-    } else if (phase != 14) {
-        if (phase < 14) {
-            /* 1st Quarter */
-            sprite->fillRect(0, 0, centerX, sprite->height(), COLOURS_MOON_BACKGROUND);
-            sprite->drawArc(
-                centerX - 1,
-                centerY,
-                radius,
-                0,
-                0,
-                180,
-                COLOURS_MOON_TERMINATOR,
-                FOUR_BIT_BLACK,
-                false
-            );
-            if (phase < 8) {
-                sprite->fillEllipse(centerX, centerY, xr, radius, COLOURS_MOON_TERMINATOR);
-            } else if (phase > 8) {
-                sprite->fillEllipse(centerX, centerY, xr, radius, COLOURS_MOON_FACE);
-            }
-        } else {
-            /* 3rd Quarter */
-            sprite->fillRect(
-                centerX + 1, 0, sprite->width(), sprite->height(), COLOURS_MOON_BACKGROUND
-            );
-            sprite->drawArc(
-                centerX + 1,
-                centerY,
-                radius,
-                0,
-                180,
-                360,
-                COLOURS_MOON_TERMINATOR,
-                COLOURS_MOON_BACKGROUND,
-                false
-            );
-            if (phase < 21) {
-                sprite->fillEllipse(centerX + 1, centerY, xr, radius, COLOURS_MOON_FACE);
-            } else if (phase > 21) {
-                sprite->fillEllipse(centerX + 1, centerY, xr, radius, COLOURS_MOON_TERMINATOR);
-            }
-        }
+        x = -1 * MOON_SPRITE_WIDTH * 0;
+    } else if (phase < 8) {
+        x = -1 * MOON_SPRITE_WIDTH * 1;
+    } else if (phase == 8) {
+        x = -1 * MOON_SPRITE_WIDTH * 2;
+    } else if (phase < 14) {
+        x = -1 * MOON_SPRITE_WIDTH * 3;
+    } else if (phase == 14) {
+        x = -1 * MOON_SPRITE_WIDTH * 4;
+    } else if (phase < 21) {
+        x = -1 * MOON_SPRITE_WIDTH * 5;
+    } else if (phase == 21) {
+        x = -1 * MOON_SPRITE_WIDTH * 6;
+    } else {
+        x = -1 * MOON_SPRITE_WIDTH * 7;
     }
+
+    sprite->fillSprite(COLOURS_MOON_BACKGROUND);
+    sprite->drawXBitmap(
+        x, 0, moon_phases, MOON_PHASES_WIDTH, MOON_PHASES_HEIGHT, TFT_BACKGROUND, TFT_WHITE
+    );
 }
 
 void toolbar_moon_phase_set(struct tm timeinfo) {
@@ -385,7 +364,7 @@ void toolbar_init() {
 
     moon_sprite.createSprite(MOON_SPRITE_WIDTH, MOON_SPRITE_HEIGHT);
     moon_sprite.createPalette(text_palette);
-    moon_sprite.setColorDepth(4);
+    // moon_sprite.setColorDepth(4);
     moon_sprite.fillSprite(TFT_BACKGROUND);
 
     data_sprite.createSprite(DATA_STATUS_SPRITE_WIDTH, DATA_STATUS_SPRITE_HEIGHT);
