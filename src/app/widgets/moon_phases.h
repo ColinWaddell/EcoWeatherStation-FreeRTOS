@@ -1,5 +1,4 @@
-/* Images can be converted to XBM format by using the online converter here:
- * https://www.online-utility.org/image/convert/to/XBM */
+/* Drawn using The Gimp */
 
 #ifndef MOON_PHASES_H
 #define MOON_PHASES_H

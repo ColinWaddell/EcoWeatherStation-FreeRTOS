@@ -44,8 +44,18 @@ QueueHandle_t wifiQueue;
 QueueHandle_t msgQueue;
 QueueHandle_t dataQueue;
 
-void draw_moon_phase(TFT_eSprite *sprite, int phase) {
+void toolbar_moon_phase_set(struct tm timeinfo) {
+    int phase;
+    int x;
+
+    /* Update with current date */
+    moon.setCurrentDate(timeinfo.tm_year, timeinfo.tm_mon, timeinfo.tm_mday);
+
+    /* The return value is 0 to 29, with 0 and 29 being hidden and 14 being full */
+    phase = moon.moonPhase();
+
 #if 0
+    /* Test code. Enable to force phase cycling */
     static int test = 0;
     phase = test;
     test++;
@@ -54,8 +64,8 @@ void draw_moon_phase(TFT_eSprite *sprite, int phase) {
     }
     log_d(">>>> PHASE: %d", phase);
 #endif
-    int x;
 
+    /* Slide the moon sprite along to show the correct pre-drawn phase */
     if (phase == 0 || phase == 29) {
         x = -1 * MOON_SPRITE_WIDTH * 0;
     } else if (phase < 6) {
@@ -74,20 +84,13 @@ void draw_moon_phase(TFT_eSprite *sprite, int phase) {
         x = -1 * MOON_SPRITE_WIDTH * 7;
     }
 
-    sprite->fillSprite(COLOURS_MOON_BACKGROUND);
-    sprite->drawXBitmap(
+    /* Draw on sprite */
+    moon_sprite.fillSprite(COLOURS_MOON_BACKGROUND);
+    moon_sprite.drawXBitmap(
         x, 0, moon_phases, MOON_PHASES_WIDTH, MOON_PHASES_HEIGHT, TFT_BACKGROUND, TFT_WHITE
     );
-}
 
-void toolbar_moon_phase_set(struct tm timeinfo) {
-    int phase;
-    moon.setCurrentDate(timeinfo.tm_year, timeinfo.tm_mon, timeinfo.tm_mday);
-
-    /* The return value is 0 to 29, with 0 and 29 being hidden and 14 being full */
-    phase = moon.moonPhase();
-    draw_moon_phase(&moon_sprite, phase);
-
+    /* Render */
     if (xSemaphoreTake(TFTLock, portMAX_DELAY) == pdTRUE) {
         moon_sprite.pushSprite(MOON_SPRITE_X, MOON_SPRITE_Y);
         xSemaphoreGive(TFTLock);
