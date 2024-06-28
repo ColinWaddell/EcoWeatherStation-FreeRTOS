@@ -58,17 +58,17 @@ void draw_moon_phase(TFT_eSprite *sprite, int phase) {
 
     if (phase == 0 || phase == 29) {
         x = -1 * MOON_SPRITE_WIDTH * 0;
-    } else if (phase < 8) {
+    } else if (phase < 6) {
         x = -1 * MOON_SPRITE_WIDTH * 1;
-    } else if (phase == 8) {
+    } else if (phase < 10) {
         x = -1 * MOON_SPRITE_WIDTH * 2;
     } else if (phase < 14) {
         x = -1 * MOON_SPRITE_WIDTH * 3;
-    } else if (phase == 14) {
+    } else if (phase < 16) {
         x = -1 * MOON_SPRITE_WIDTH * 4;
-    } else if (phase < 21) {
+    } else if (phase < 20) {
         x = -1 * MOON_SPRITE_WIDTH * 5;
-    } else if (phase == 21) {
+    } else if (phase < 24) {
         x = -1 * MOON_SPRITE_WIDTH * 6;
     } else {
         x = -1 * MOON_SPRITE_WIDTH * 7;
