@@ -364,7 +364,7 @@ void toolbar_init() {
 
     moon_sprite.createSprite(MOON_SPRITE_WIDTH, MOON_SPRITE_HEIGHT);
     moon_sprite.createPalette(text_palette);
-    // moon_sprite.setColorDepth(4);
+    moon_sprite.setColorDepth(1);
     moon_sprite.fillSprite(TFT_BACKGROUND);
 
     data_sprite.createSprite(DATA_STATUS_SPRITE_WIDTH, DATA_STATUS_SPRITE_HEIGHT);
