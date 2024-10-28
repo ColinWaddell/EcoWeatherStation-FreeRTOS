@@ -3,7 +3,7 @@
 #include "app/tft.h"
 
 #define GRAPH_PIXEL_SPACING 3
-#define FIFO_INIT_VAL -999.0
+#define FIFO_INIT_VAL -999
 
 // Constructor with colors
 FIFOGraph::FIFOGraph(
@@ -100,13 +100,18 @@ void FIFOGraph::drawGraph() {
 }
 
 void FIFOGraph::adjustBounds() {
-    float newYMin = data.front();
-    float newYMax = data.front();
+    float newYMin = 0;
+    float newYMax = 1;
     std::queue<float> temp = data;  // Create a temporary copy to iterate through the data
 
     while (!temp.empty()) {
         float point = temp.front();
         temp.pop();
+
+        if (point == FIFO_INIT_VAL) {
+            point = 0.0;
+        }
+
         if (point < newYMin)
             newYMin = point;
         if (point > newYMax)
@@ -124,10 +129,7 @@ void FIFOGraph::addDataPoint(float newPoint) {
     }
     data.push(newPoint);
 
-    if (newPoint < yMin || newPoint > yMax) {
-        adjustBounds();
-    }
-
+    adjustBounds();
     drawGraph();
 }
 
