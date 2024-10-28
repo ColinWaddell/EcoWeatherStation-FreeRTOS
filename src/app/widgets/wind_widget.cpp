@@ -113,7 +113,7 @@ void wind_widget_task(void *pvParameters) {
             direction_arrow_update_widget(packet.direction);
 
             if (!graph_interval) {
-                wind_graph.addDataPoint(packet.speed);
+                wind_graph.addDataPoint(packet.gust);
             }
             graph_interval = (graph_interval + 1) % GRAPH_UPDATE_INTERVAL;
         }
