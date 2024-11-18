@@ -78,7 +78,7 @@ void FIFOGraph::drawGraph() {
     char y_mid_str[10] = { 0 };
     char y_max_str[10] = { 0 };
     snprintf(y_min_str, sizeof(y_min_str), "%0.1f", yMin);
-    snprintf(y_mid_str, sizeof(y_mid_str), "%0.1f", (yMax - yMin) / 2.0f);
+    snprintf(y_mid_str, sizeof(y_mid_str), "%0.1f", ((yMax - yMin) / 2.0f) + yMin);
     snprintf(y_max_str, sizeof(y_max_str), "%0.1f", yMax);
 
     sprite->setTextColor(COLOURS_GRAPH_FOREGROUND, COLOURS_GRAPH_BACKGROUND);
